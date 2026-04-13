@@ -7,6 +7,7 @@ create table if not exists identity
     authority  varchar        not null,
     email      varchar unique not null,
     password   varchar        not null,
+    phone      varchar unique not null,
     status     boolean        not null default true,
     firstname  varchar        not null,
     lastname   varchar        not null,
