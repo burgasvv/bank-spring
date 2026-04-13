@@ -10,5 +10,5 @@ create table if not exists card
     valid_until date           not null,
     balance     decimal        not null default 0 check ( balance >= 0 ),
     pin         varchar        not null,
-    created_at  timestamp      not null
+    created_at  timestamp      not null default now()
 )
