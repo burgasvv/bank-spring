@@ -33,15 +33,51 @@ import java.util.UUID
         NamedSubgraph(
             name = "transfersBySender-subgraph",
             attributeNodes = [
-                NamedAttributeNode(value = "sender"),
-                NamedAttributeNode(value = "receiver"),
+                NamedAttributeNode(value = "sender", subgraph = "sender-subgraph"),
+                NamedAttributeNode(value = "receiver", subgraph = "receiver-subgraph")
+            ]
+        ),
+        NamedSubgraph(
+            name = "sender-subgraph",
+            attributeNodes = [
+                NamedAttributeNode(value = "account", subgraph = "sender-account-subgraph")
+            ]
+        ),
+        NamedSubgraph(
+            name = "sender-account-subgraph",
+            attributeNodes = [
+                NamedAttributeNode(value = "wallet", subgraph = "sender-wallet-subgraph")
+            ]
+        ),
+        NamedSubgraph(
+            name = "sender-wallet-subgraph",
+            attributeNodes = [
+                NamedAttributeNode(value = "identity")
             ]
         ),
         NamedSubgraph(
             name = "transfersByReceiver-subgraph",
             attributeNodes = [
-                NamedAttributeNode(value = "sender"),
-                NamedAttributeNode(value = "receiver")
+                NamedAttributeNode(value = "sender", subgraph = "sender-subgraph"),
+                NamedAttributeNode(value = "receiver", subgraph = "receiver-subgraph")
+            ]
+        ),
+        NamedSubgraph(
+            name = "receiver-subgraph",
+            attributeNodes = [
+                NamedAttributeNode(value = "account", subgraph = "receiver-account-subgraph")
+            ]
+        ),
+        NamedSubgraph(
+            name = "receiver-account-subgraph",
+            attributeNodes = [
+                NamedAttributeNode(value = "wallet", subgraph = "receiver-wallet-subgraph")
+            ]
+        ),
+        NamedSubgraph(
+            name = "receiver-wallet-subgraph",
+            attributeNodes = [
+                NamedAttributeNode(value = "identity")
             ]
         )
     ]

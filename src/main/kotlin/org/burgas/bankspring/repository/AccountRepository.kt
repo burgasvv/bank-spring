@@ -12,4 +12,10 @@ interface AccountRepository : JpaRepository<Account, UUID> {
 
     @EntityGraph(value = "account-entity-graph", type = EntityGraph.EntityGraphType.FETCH)
     override fun findById(id: UUID): Optional<Account>
+
+    fun existsAccountByNumber(number: Long): Boolean
+
+    fun existsAccountByInn(inn: Long): Boolean
+
+    fun existsAccountByCpp(cpp: Long): Boolean
 }

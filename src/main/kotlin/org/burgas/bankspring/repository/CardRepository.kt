@@ -12,4 +12,8 @@ interface CardRepository : JpaRepository<Card, UUID> {
 
     @EntityGraph(value = "card-entity-graph", type = EntityGraph.EntityGraphType.FETCH)
     override fun findById(id: UUID): Optional<Card>
+
+    fun existsCardByNumber(number: String): Boolean
+
+    fun existsCardByCode(code: Long): Boolean
 }
