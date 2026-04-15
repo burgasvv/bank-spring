@@ -104,7 +104,7 @@ class CardMapper : FullMapper<CardRequest, Card, CardShortResponse, CardFullResp
             validUntil = entity.validUntil.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
             balance = entity.balance,
             account = Optional.ofNullable(entity.account)
-                .map { this.getAccountMapper().toShortResponse(entity.account) }
+                .map { this.getAccountMapper().toShortResponse(it) }
                 .orElse(null),
             createdAt = entity.createdAt.format(DateTimeFormatter.ofPattern("dd MMMM yyyy, hh:mm"))
         )

@@ -33,10 +33,10 @@ class Account : org.burgas.bankspring.dao.Entity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "wallet_id", referencedColumnName = "id")
-    lateinit var wallet: Wallet
+    var wallet: Wallet? = null
 
     @OneToOne(mappedBy = "account", cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
-    lateinit var card: Card
+    var card: Card? = null
 
     lateinit var createdAt: LocalDateTime
 }

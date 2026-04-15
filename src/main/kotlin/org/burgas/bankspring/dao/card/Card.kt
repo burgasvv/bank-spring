@@ -106,7 +106,7 @@ class Card : org.burgas.bankspring.dao.Entity {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
-    lateinit var account: Account
+    var account: Account? = null
 
     @OneToMany(mappedBy = "card", fetch = FetchType.LAZY)
     var operations: MutableList<Operation> = mutableListOf()

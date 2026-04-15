@@ -31,6 +31,10 @@ spring:
     password: postgres
     user: postgres
     url: "jdbc:postgresql://localhost:5000/bank_spring_db"
+  data:
+    redis:
+      host: localhost
+      port: 6000
 logging:
   level:
     org.springframework.transaction: DEBUG

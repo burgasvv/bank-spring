@@ -1,4 +1,4 @@
-package org.burgas.bankspring.config
+package org.burgas.bankspring.redis
 
 import org.burgas.bankspring.dto.account.AccountFullResponse
 import org.burgas.bankspring.dto.card.CardFullResponse

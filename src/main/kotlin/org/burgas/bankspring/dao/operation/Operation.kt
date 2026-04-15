@@ -62,7 +62,7 @@ class Operation : org.burgas.bankspring.dao.Entity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "card_id", referencedColumnName = "id")
-    lateinit var card: Card
+    var card: Card? = null
 
     @Column(name = "created_at")
     lateinit var createdAt: LocalDateTime

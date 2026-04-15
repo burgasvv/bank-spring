@@ -45,7 +45,7 @@ class Wallet : org.burgas.bankspring.dao.Entity {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "identity_id", referencedColumnName = "id")
-    lateinit var identity: Identity
+    var identity: Identity? = null
 
     @OneToMany(mappedBy = "wallet", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     var accounts: MutableList<Account> = mutableListOf()

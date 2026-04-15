@@ -61,11 +61,11 @@ class Transfer : org.burgas.bankspring.dao.Entity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sender_id", referencedColumnName = "id")
-    lateinit var sender: Card
+    var sender: Card? = null
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "receiver_id", referencedColumnName = "id")
-    lateinit var receiver: Card
+    var receiver: Card? = null
 
     @Column(name = "amount")
     var amount: Double = 0.0

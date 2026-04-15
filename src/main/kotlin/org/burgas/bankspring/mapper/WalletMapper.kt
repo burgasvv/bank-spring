@@ -61,7 +61,9 @@ class WalletMapper : FullMapper<WalletRequest, Wallet, WalletShortResponse, Wall
     override fun toShortResponse(entity: Wallet): WalletShortResponse {
         return WalletShortResponse(
             id = entity.id,
-            identity = this.getIdentityMapper().toShortResponse(entity.identity),
+            identity = Optional.ofNullable(entity.identity)
+                .map { this.getIdentityMapper().toShortResponse(it) }
+                .orElse(null),
             createdAt = entity.createdAt.format(DateTimeFormatter.ofPattern("dd MMMM yyyy, hh:mm"))
         )
     }

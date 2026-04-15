@@ -1,0 +1,65 @@
+
+
+
+### Identity Requests
+
+
+
+###
+POST /api/v1/identities/create
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+
+{
+    "authority": "ADMIN",
+    "email": "burgasvv@gmail.com",
+    "password": "burgasvv",
+    "phone": "+79539045689",
+    "status": true,
+    "firstname": "Бургас",
+    "lastname": "Вячеслав",
+    "patronymic": "Васильевич"
+}
+
+###
+GET /api/v1/identities/by-id?identityId=99337067-a69e-4ca0-ae8a-8ce9f53f394a
+Host: localhost:9000
+Accept: application/json
+
+###
+PUT /api/v1/identities/update
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+
+{
+    "id": "5f702c8d-2582-43ea-a45b-c25f073a7808",
+    "phone": "+79135062345"
+}
+
+###
+DELETE /api/v1/identities/delete?identityId=e723e4c9-84e5-4cd6-8f86-3fd698c5b628
+Host: localhost:9000
+Accept: application/json
+
+
+
+### Wallet Requests
+
+
+
+###
+POST /api/v1/wallets/create
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+
+{
+    "identityId": "99337067-a69e-4ca0-ae8a-8ce9f53f394a"
+}
+
+###
+GET /api/v1/wallets/by-id?walletId=a8e2c256-a20c-419d-9cd5-5ff6ed5be7a8
+Host: localhost:9000
+Accept: application/json

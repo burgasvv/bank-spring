@@ -1,4 +1,4 @@
-package org.burgas.bankspring.service
+package org.burgas.bankspring.service.contract
 
 import org.burgas.bankspring.dto.Response
 
