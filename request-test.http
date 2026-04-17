@@ -63,3 +63,82 @@ Content-Type: application/json
 GET /api/v1/wallets/by-id?walletId=a8e2c256-a20c-419d-9cd5-5ff6ed5be7a8
 Host: localhost:9000
 Accept: application/json
+
+###
+DELETE /api/v1/wallets/delete?walletId=a8e2c256-a20c-419d-9cd5-5ff6ed5be7a8
+Host: localhost:9000
+Accept: application/json
+
+
+
+### Account Requests
+
+
+
+###
+POST /api/v1/accounts/create
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+
+{
+    "walletId": "a8e2c256-a20c-419d-9cd5-5ff6ed5be7a8"
+}
+
+###
+GET /api/v1/accounts/by-id?accountId=da460f91-3b85-4d33-9750-82d0400db470
+Host: localhost:9000
+Accept: application/json
+
+
+
+### Card Requests
+
+
+
+###
+POST /api/v1/cards/create
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+
+{
+    "validUntil": "2030-04-15",
+    "pin": "7845",
+    "accountId": "da460f91-3b85-4d33-9750-82d0400db470"
+}
+
+###
+GET /api/v1/cards/by-id?cardId=3206d4ef-47fb-44d8-a6b6-d6414a52c0c4
+Host: localhost:9000
+Accept: application/json
+
+
+
+### Operation Requests
+
+
+
+###
+POST /api/v1/operations/create
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+
+{
+    "type": "DEPOSIT",
+    "amount": 1000.0,
+    "cardId": "3206d4ef-47fb-44d8-a6b6-d6414a52c0c4"
+}
+
+###
+POST /api/v1/operations/create
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+
+{
+    "type": "WITHDRAW",
+    "amount": 500.0,
+    "cardId": "3206d4ef-47fb-44d8-a6b6-d6414a52c0c4"
+}

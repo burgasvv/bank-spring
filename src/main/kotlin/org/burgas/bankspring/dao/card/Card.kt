@@ -25,11 +25,24 @@ import java.util.UUID
 @NamedEntityGraph(
     name = "card-entity-graph",
     attributeNodes = [
+        NamedAttributeNode(value = "account", subgraph = "account-subgraph"),
         NamedAttributeNode(value = "operations"),
         NamedAttributeNode(value = "transfersBySender", subgraph = "transfersBySender-subgraph"),
         NamedAttributeNode(value = "transfersByReceiver", subgraph = "transfersByReceiver-subgraph"),
     ],
     subgraphs = [
+        NamedSubgraph(
+            name = "account-subgraph",
+            attributeNodes = [
+                NamedAttributeNode(value = "wallet", subgraph = "wallet-subgraph")
+            ]
+        ),
+        NamedSubgraph(
+            name = "wallet-subgraph",
+            attributeNodes = [
+                NamedAttributeNode(value = "identity")
+            ]
+        ),
         NamedSubgraph(
             name = "transfersBySender-subgraph",
             attributeNodes = [

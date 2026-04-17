@@ -78,6 +78,7 @@ class CardMapper : FullMapper<CardRequest, Card, CardShortResponse, CardFullResp
                     }
                     this.number = createNumber
                     this.code = RandomGenerator.getDefault().nextLong(100, 999)
+                    this.validUntil = request.validUntil ?: throw IllegalArgumentException("Valid until is null")
 
                     if (request.pin != null) {
                         this.pin = if (RegularUtil.PIN_REGEX.matches(request.pin)) request.pin

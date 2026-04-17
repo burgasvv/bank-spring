@@ -3,6 +3,7 @@ package org.burgas.bankspring.mapper
 import org.burgas.bankspring.dao.transfer.Transfer
 import org.burgas.bankspring.dto.transfer.TransferRequest
 import org.burgas.bankspring.dto.transfer.TransferResponse
+import org.burgas.bankspring.mapper.contract.ITransfer
 import org.burgas.bankspring.mapper.contract.SimpleMapper
 import org.burgas.bankspring.repository.TransferRepository
 import org.springframework.beans.factory.ObjectFactory
@@ -13,7 +14,7 @@ import java.util.Optional
 import java.util.UUID
 
 @Component
-class TransferMapper : SimpleMapper<TransferRequest, Transfer, TransferResponse> {
+class TransferMapper : SimpleMapper<TransferRequest, Transfer, TransferResponse>, ITransfer {
 
     final val transferRepository: TransferRepository
 
@@ -27,18 +28,20 @@ class TransferMapper : SimpleMapper<TransferRequest, Transfer, TransferResponse>
     private fun getCardMapper(): CardMapper = this.cardMapperObjectFactory.`object`
 
     override fun toEntity(request: TransferRequest): Transfer {
-        return Transfer().apply {
+        val transfer = Transfer().apply {
             val sender = getCardMapper().cardRepository
-                .findById(request.senderId ?: UUID(0, 0))
+                .findCardByIdWithPessimisticLock(request.senderId ?: UUID(0, 0))
+                .orElse(null)
+            val receiver = getCardMapper().cardRepository
+                .findCardByIdWithPessimisticLock(request.receiverId ?: UUID(0, 0))
                 .orElse(null)
             this.sender = sender ?: throw IllegalArgumentException("Sender not found")
-            val receiver = getCardMapper().cardRepository
-                .findById(request.receiverId ?: UUID(0, 0))
-                .orElse(null)
             this.receiver = receiver ?: throw IllegalArgumentException("Receiver not found")
             this.amount = request.amount ?: throw IllegalArgumentException("Amount is null")
             this.createdAt = LocalDateTime.now()
         }
+        this.transfer(transfer)
+        return transfer
     }
 
     override fun toResponse(entity: Transfer): TransferResponse {
