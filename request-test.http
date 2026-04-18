@@ -86,6 +86,16 @@ Content-Type: application/json
 }
 
 ###
+POST /api/v1/accounts/create
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+
+{
+    "walletId": "a8e2c256-a20c-419d-9cd5-5ff6ed5be7a8"
+}
+
+###
 GET /api/v1/accounts/by-id?accountId=da460f91-3b85-4d33-9750-82d0400db470
 Host: localhost:9000
 Accept: application/json
@@ -106,6 +116,18 @@ Content-Type: application/json
     "validUntil": "2030-04-15",
     "pin": "7845",
     "accountId": "da460f91-3b85-4d33-9750-82d0400db470"
+}
+
+###
+POST /api/v1/cards/create
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+
+{
+    "validUntil": "2031-05-15",
+    "pin": "5689",
+    "accountId": "a9391662-5190-4f81-a0a7-59614c84db1f"
 }
 
 ###
@@ -142,3 +164,31 @@ Content-Type: application/json
     "amount": 500.0,
     "cardId": "3206d4ef-47fb-44d8-a6b6-d6414a52c0c4"
 }
+
+###
+GET /api/v1/operations/by-id?operationId=846a427a-873b-44a4-9e64-35d7db4f1d81
+Host: localhost:9000
+Accept: application/json
+
+
+
+### Transfer Requests
+
+
+
+###
+POST /api/v1/transfers/create
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+
+{
+    "senderId": "3206d4ef-47fb-44d8-a6b6-d6414a52c0c4",
+    "receiverId": "768b6474-425c-43cc-8175-c6e034802c55",
+    "amount": 1000.0
+}
+
+###
+GET /api/v1/transfers/by-id?transferId=34d0ca78-cdd5-4705-8d5d-3b2d62b1f454
+Host: localhost:9000
+Accept: application/json
