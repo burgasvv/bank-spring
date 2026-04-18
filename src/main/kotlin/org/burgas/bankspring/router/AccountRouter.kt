@@ -1,6 +1,7 @@
 package org.burgas.bankspring.router
 
 import org.burgas.bankspring.dto.account.AccountRequest
+import org.burgas.bankspring.dto.exception.ExceptionResponse
 import org.burgas.bankspring.router.contract.Router
 import org.burgas.bankspring.service.AccountService
 import org.springframework.context.annotation.Bean
@@ -43,6 +44,17 @@ class AccountRouter(override val service: AccountService) : Router<AccountServic
                 val accountId = UUID.fromString(it.param("accountId").orElseThrow())
                 service.delete(accountId)
                 ServerResponse.noContent().build()
+            }
+
+            onError<Throwable> { throwable, _ ->
+                ServerResponse.status(HttpStatus.BAD_REQUEST)
+                    .body(
+                        ExceptionResponse(
+                            HttpStatus.BAD_REQUEST.name,
+                            HttpStatus.BAD_REQUEST.value(),
+                            throwable.localizedMessage
+                        )
+                    )
             }
         }
     }

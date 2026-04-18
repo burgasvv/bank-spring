@@ -1,6 +1,7 @@
 package org.burgas.bankspring.router
 
 import org.burgas.bankspring.dto.card.CardRequest
+import org.burgas.bankspring.dto.exception.ExceptionResponse
 import org.burgas.bankspring.router.contract.Router
 import org.burgas.bankspring.service.CardService
 import org.springframework.context.annotation.Bean
@@ -43,6 +44,17 @@ class CardRouter(override val service: CardService) : Router<CardService> {
                 val cardId = UUID.fromString(it.param("cardId").orElseThrow())
                 service.delete(cardId)
                 ServerResponse.noContent().build()
+            }
+
+            onError<Throwable> { throwable, _ ->
+                ServerResponse.status(HttpStatus.BAD_REQUEST)
+                    .body(
+                        ExceptionResponse(
+                            HttpStatus.BAD_REQUEST.name,
+                            HttpStatus.BAD_REQUEST.value(),
+                            throwable.localizedMessage
+                        )
+                    )
             }
         }
     }

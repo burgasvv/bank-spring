@@ -1,5 +1,6 @@
 package org.burgas.bankspring.router
 
+import org.burgas.bankspring.dto.exception.ExceptionResponse
 import org.burgas.bankspring.dto.transfer.TransferRequest
 import org.burgas.bankspring.router.contract.Router
 import org.burgas.bankspring.service.TransferService
@@ -31,6 +32,17 @@ class TransferRouter(override val service: TransferService) : Router<TransferSer
                 val transferRequest = it.body<TransferRequest>()
                 service.create(transferRequest)
                 ServerResponse.status(HttpStatus.OK).build()
+            }
+
+            onError<Throwable> { throwable, _ ->
+                ServerResponse.status(HttpStatus.BAD_REQUEST)
+                    .body(
+                        ExceptionResponse(
+                            HttpStatus.BAD_REQUEST.name,
+                            HttpStatus.BAD_REQUEST.value(),
+                            throwable.localizedMessage
+                        )
+                    )
             }
         }
     }

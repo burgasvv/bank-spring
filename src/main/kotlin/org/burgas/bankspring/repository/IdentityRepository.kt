@@ -12,4 +12,6 @@ interface IdentityRepository : JpaRepository<Identity, UUID> {
 
     @EntityGraph(value = "identity-entity-graph", type = EntityGraph.EntityGraphType.FETCH)
     override fun findById(id: UUID): Optional<Identity>
+
+    fun findIdentityByEmail(email: String): Optional<Identity>
 }

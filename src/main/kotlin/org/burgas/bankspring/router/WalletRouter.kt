@@ -1,5 +1,6 @@
 package org.burgas.bankspring.router
 
+import org.burgas.bankspring.dto.exception.ExceptionResponse
 import org.burgas.bankspring.dto.wallet.WalletRequest
 import org.burgas.bankspring.router.contract.Router
 import org.burgas.bankspring.service.WalletService
@@ -43,6 +44,17 @@ class WalletRouter(override val service: WalletService) : Router<WalletService> 
                 val walletId = UUID.fromString(it.param("walletId").orElseThrow())
                 service.delete(walletId)
                 ServerResponse.noContent().build()
+            }
+
+            onError<Throwable> { throwable, _ ->
+                ServerResponse.status(HttpStatus.BAD_REQUEST)
+                    .body(
+                        ExceptionResponse(
+                            HttpStatus.BAD_REQUEST.name,
+                            HttpStatus.BAD_REQUEST.value(),
+                            throwable.localizedMessage
+                        )
+                    )
             }
         }
     }

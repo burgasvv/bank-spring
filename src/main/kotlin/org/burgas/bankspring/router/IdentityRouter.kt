@@ -1,5 +1,6 @@
 package org.burgas.bankspring.router
 
+import org.burgas.bankspring.dto.exception.ExceptionResponse
 import org.burgas.bankspring.dto.identity.IdentityRequest
 import org.burgas.bankspring.router.contract.Router
 import org.burgas.bankspring.service.IdentityService
@@ -43,6 +44,17 @@ class IdentityRouter(override val service: IdentityService) : Router<IdentitySer
                 val identityId = UUID.fromString(it.param("identityId").orElseThrow())
                 service.delete(identityId)
                 ServerResponse.noContent().build()
+            }
+
+            onError<Throwable> { throwable, _ ->
+                ServerResponse.status(HttpStatus.BAD_REQUEST)
+                    .body(
+                        ExceptionResponse(
+                            HttpStatus.BAD_REQUEST.name,
+                            HttpStatus.BAD_REQUEST.value(),
+                            throwable.localizedMessage
+                        )
+                    )
             }
         }
     }

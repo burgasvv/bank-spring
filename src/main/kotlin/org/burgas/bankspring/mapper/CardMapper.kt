@@ -7,7 +7,7 @@ import org.burgas.bankspring.dto.card.CardResponseWithoutAccount
 import org.burgas.bankspring.dto.card.CardShortResponse
 import org.burgas.bankspring.mapper.contract.FullMapper
 import org.burgas.bankspring.repository.CardRepository
-import org.burgas.bankspring.util.RegularUtil
+import org.burgas.bankspring.util.RegexUtil
 import org.springframework.beans.factory.ObjectFactory
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -53,7 +53,7 @@ class CardMapper : FullMapper<CardRequest, Card, CardShortResponse, CardFullResp
                     this.validUntil = request.validUntil ?: it.validUntil
                     this.balance = it.balance
                     if (request.pin != null) {
-                        this.pin = if (RegularUtil.PIN_REGEX.matches(request.pin)) request.pin
+                        this.pin = if (RegexUtil.PIN_REGEX.matches(request.pin)) request.pin
                         else throw IllegalArgumentException("Pin regex not matched")
                     } else {
                         this.pin = it.pin
@@ -81,7 +81,7 @@ class CardMapper : FullMapper<CardRequest, Card, CardShortResponse, CardFullResp
                     this.validUntil = request.validUntil ?: throw IllegalArgumentException("Valid until is null")
 
                     if (request.pin != null) {
-                        this.pin = if (RegularUtil.PIN_REGEX.matches(request.pin)) request.pin
+                        this.pin = if (RegexUtil.PIN_REGEX.matches(request.pin)) request.pin
                         else throw IllegalArgumentException("Pin regex not matched")
                     } else {
                         throw IllegalArgumentException("Pin is null")

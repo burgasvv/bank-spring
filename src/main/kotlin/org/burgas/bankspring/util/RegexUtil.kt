@@ -1,6 +1,6 @@
 package org.burgas.bankspring.util
 
-class RegularUtil {
+class RegexUtil {
 
     companion object {
         val PHONE_REGEX: Regex = Regex("^\\+[1-9]\\d{6,14}$")

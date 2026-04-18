@@ -7,8 +7,9 @@ import org.burgas.bankspring.dto.identity.IdentityRequest
 import org.burgas.bankspring.dto.identity.IdentityShortResponse
 import org.burgas.bankspring.mapper.contract.FullMapper
 import org.burgas.bankspring.repository.IdentityRepository
-import org.burgas.bankspring.util.RegularUtil
+import org.burgas.bankspring.util.RegexUtil
 import org.springframework.beans.factory.ObjectFactory
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
 import java.util.Optional
 import java.util.UUID
@@ -17,11 +18,17 @@ import java.util.UUID
 class IdentityMapper : FullMapper<IdentityRequest, Identity, IdentityShortResponse, IdentityFullResponse> {
 
     final val identityRepository: IdentityRepository
+    private final val passwordEncoder: PasswordEncoder
 
     private final val walletMapperObjectFactory: ObjectFactory<WalletMapper>
 
-    constructor(identityRepository: IdentityRepository, walletMapperObjectMapper: ObjectFactory<WalletMapper>) {
+    constructor(
+        identityRepository: IdentityRepository,
+        passwordEncoder: PasswordEncoder,
+        walletMapperObjectMapper: ObjectFactory<WalletMapper>
+    ) {
         this.identityRepository = identityRepository
+        this.passwordEncoder = passwordEncoder
         this.walletMapperObjectFactory = walletMapperObjectMapper
     }
 
@@ -36,7 +43,7 @@ class IdentityMapper : FullMapper<IdentityRequest, Identity, IdentityShortRespon
                     this.email = request.email ?: it.email
                     this.password = it.password
                     if (request.phone != null) {
-                        this.phone = if (RegularUtil.PHONE_REGEX.matches(request.phone)) request.phone
+                        this.phone = if (RegexUtil.PHONE_REGEX.matches(request.phone)) request.phone
                         else throw IllegalArgumentException("Phone regex not matched")
                     } else {
                         this.phone = it.phone
@@ -51,9 +58,14 @@ class IdentityMapper : FullMapper<IdentityRequest, Identity, IdentityShortRespon
                 Identity().apply {
                     this.authority = request.authority ?: Authority.USER
                     this.email = request.email ?: throw IllegalArgumentException("Email is null")
-                    this.password = request.password ?: throw IllegalArgumentException("Password is null")
+                    val newPassword =
+                        if (!request.password.isNullOrEmpty())
+                            passwordEncoder.encode(request.password)!!
+                        else
+                            throw IllegalArgumentException("Password is null or empty")
+                    this.password = newPassword
                     if (request.phone != null) {
-                        this.phone = if (RegularUtil.PHONE_REGEX.matches(request.phone)) request.phone
+                        this.phone = if (RegexUtil.PHONE_REGEX.matches(request.phone)) request.phone
                         else throw IllegalArgumentException("Phone regex not matched")
                     } else {
                         throw IllegalArgumentException("Phone is null")
