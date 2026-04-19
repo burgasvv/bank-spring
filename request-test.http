@@ -213,6 +213,12 @@ Host: localhost:9000
 Accept: application/json
 Authorization: Basic burgasvv@gmail.com burgasvv
 
+###
+GET /api/v1/cards/by-id?cardId=e6fe3169-8c53-49d7-bedb-be49256b9e0f
+Host: localhost:9000
+Accept: application/json
+Authorization: Basic zagor@gmail.com zagor
+
 
 
 ### Operation Requests
@@ -224,11 +230,13 @@ POST /api/v1/operations/create
 Host: localhost:9000
 Accept: application/json
 Content-Type: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
+X-Csrf-Token: hNL80B6s3JGTr9Ywtf-27nBkKwrdlPWWf-g6rU7dKDuVIxYPs7DN4XzN6am-l7VS0NKC1kJWBjPuoJe7TNsNyyjvHQOsQiU_
 
 {
     "type": "DEPOSIT",
-    "amount": 1000.0,
-    "cardId": "3206d4ef-47fb-44d8-a6b6-d6414a52c0c4"
+    "amount": 1500.0,
+    "cardId": "3fddc2dd-0b48-46dc-b68f-2e4f0ea5816d"
 }
 
 ###
@@ -236,17 +244,20 @@ POST /api/v1/operations/create
 Host: localhost:9000
 Accept: application/json
 Content-Type: application/json
+Authorization: Basic zagor@gmail.com zagor
+X-Csrf-Token: hNL80B6s3JGTr9Ywtf-27nBkKwrdlPWWf-g6rU7dKDuVIxYPs7DN4XzN6am-l7VS0NKC1kJWBjPuoJe7TNsNyyjvHQOsQiU_
 
 {
-    "type": "WITHDRAW",
+    "type": "DEPOSIT",
     "amount": 500.0,
-    "cardId": "3206d4ef-47fb-44d8-a6b6-d6414a52c0c4"
+    "cardId": "e6fe3169-8c53-49d7-bedb-be49256b9e0f"
 }
 
 ###
-GET /api/v1/operations/by-id?operationId=846a427a-873b-44a4-9e64-35d7db4f1d81
+GET /api/v1/operations/by-id?operationId=306a7d94-5488-4105-acac-ec8ce9095cd5
 Host: localhost:9000
 Accept: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
 
 
 
@@ -259,14 +270,17 @@ POST /api/v1/transfers/create
 Host: localhost:9000
 Accept: application/json
 Content-Type: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
+X-Csrf-Token: IFsQqtj4ZhRTaFxXtTD0YXB9Kz54lo5AyU29s_kqLRzJj9UWRW50zOubVyd-WjpjjR3AURNMBgdIoOptqiyJ0c4SSXn4ve1z
 
 {
-    "senderId": "3206d4ef-47fb-44d8-a6b6-d6414a52c0c4",
-    "receiverId": "768b6474-425c-43cc-8175-c6e034802c55",
-    "amount": 1000.0
+    "senderId": "3fddc2dd-0b48-46dc-b68f-2e4f0ea5816d",
+    "receiverId": "e6fe3169-8c53-49d7-bedb-be49256b9e0f",
+    "amount": 500.0
 }
 
 ###
-GET /api/v1/transfers/by-id?transferId=34d0ca78-cdd5-4705-8d5d-3b2d62b1f454
+GET /api/v1/transfers/by-id?transferId=bc9cdc14-6c73-4bd8-a4e4-39604e0cbf7d
 Host: localhost:9000
 Accept: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
