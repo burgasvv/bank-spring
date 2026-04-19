@@ -5,14 +5,13 @@ import org.burgas.bankspring.dto.operation.OperationFullResponse
 import org.burgas.bankspring.dto.operation.OperationRequest
 import org.burgas.bankspring.dto.operation.OperationShortResponse
 import org.burgas.bankspring.mapper.contract.FullMapper
-import org.burgas.bankspring.repository.OperationRepository
 import org.burgas.bankspring.mapper.contract.IOperation
+import org.burgas.bankspring.repository.OperationRepository
 import org.springframework.beans.factory.ObjectFactory
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Optional
-import java.util.UUID
+import java.util.*
 
 @Component
 class OperationMapper : FullMapper<OperationRequest, Operation, OperationShortResponse, OperationFullResponse>,
@@ -35,10 +34,10 @@ class OperationMapper : FullMapper<OperationRequest, Operation, OperationShortRe
     override fun toEntity(request: OperationRequest): Operation {
         val operation = Operation().apply {
             val findCard = getCardMapper().cardRepository
-                .findCardByIdWithPessimisticLock(request.cardId ?: UUID(0, 0))
+                .findCardByIdWithPessimisticLock(request.cardId)
                 .orElse(null)
-            this.type = request.type ?: throw IllegalArgumentException("Operation type is null")
-            this.amount = request.amount ?: throw IllegalArgumentException("Amount is null")
+            this.type = request.type
+            this.amount = request.amount
             this.card = findCard ?: throw IllegalArgumentException("Card not found for operation")
             this.createdAt = LocalDateTime.now()
         }
@@ -61,7 +60,7 @@ class OperationMapper : FullMapper<OperationRequest, Operation, OperationShortRe
             type = entity.type,
             amount = entity.amount,
             card = Optional.ofNullable(entity.card)
-                .map { this.getCardMapper().toShortResponse(it) }
+                .map { this.getCardMapper().toCardResponseWithoutAccount(it) }
                 .orElse(null),
             createdAt = entity.createdAt.format(DateTimeFormatter.ofPattern("dd MMMM yyyy, h:mm"))
         )

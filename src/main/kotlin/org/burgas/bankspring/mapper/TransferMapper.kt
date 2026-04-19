@@ -10,8 +10,7 @@ import org.springframework.beans.factory.ObjectFactory
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Optional
-import java.util.UUID
+import java.util.*
 
 @Component
 class TransferMapper : SimpleMapper<TransferRequest, Transfer, TransferResponse>, ITransfer {
@@ -30,14 +29,14 @@ class TransferMapper : SimpleMapper<TransferRequest, Transfer, TransferResponse>
     override fun toEntity(request: TransferRequest): Transfer {
         val transfer = Transfer().apply {
             val sender = getCardMapper().cardRepository
-                .findCardByIdWithPessimisticLock(request.senderId ?: UUID(0, 0))
+                .findCardByIdWithPessimisticLock(request.senderId)
                 .orElse(null)
             val receiver = getCardMapper().cardRepository
-                .findCardByIdWithPessimisticLock(request.receiverId ?: UUID(0, 0))
+                .findCardByIdWithPessimisticLock(request.receiverId)
                 .orElse(null)
             this.sender = sender ?: throw IllegalArgumentException("Sender not found")
             this.receiver = receiver ?: throw IllegalArgumentException("Receiver not found")
-            this.amount = request.amount ?: throw IllegalArgumentException("Amount is null")
+            this.amount = request.amount
             this.createdAt = LocalDateTime.now()
         }
         this.transfer(transfer)
@@ -48,10 +47,10 @@ class TransferMapper : SimpleMapper<TransferRequest, Transfer, TransferResponse>
         return TransferResponse(
             id = entity.id,
             sender = Optional.ofNullable(entity.sender)
-                .map { this.getCardMapper().toShortResponse(it) }
+                .map { this.getCardMapper().toCardResponseWithoutAccount(it) }
                 .orElse(null),
             receiver = Optional.ofNullable(entity.receiver)
-                .map { this.getCardMapper().toShortResponse(it) }
+                .map { this.getCardMapper().toCardResponseWithoutAccount(it) }
                 .orElse(null),
             amount = entity.amount,
             createdAt = entity.createdAt.format(DateTimeFormatter.ofPattern("dd MMMM yyyy, hh:mm"))

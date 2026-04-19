@@ -52,7 +52,7 @@ class SecurityConfig {
                 authorize("/api/v1/identities/by-id", hasAnyAuthority("ADMIN", "USER"))
                 authorize("/api/v1/identities/create", permitAll)
                 authorize("/api/v1/identities/update", hasAnyAuthority("ADMIN"))
-                authorize("/api/v1/identites/delete", hasAnyAuthority("ADMIN"))
+                authorize("/api/v1/identities/delete", hasAnyAuthority("ADMIN"))
 
                 authorize("/api/v1/wallets/by-id", hasAnyAuthority("ADMIN", "USER"))
                 authorize("/api/v1/wallets/create", hasAnyAuthority("ADMIN"))

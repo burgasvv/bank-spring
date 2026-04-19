@@ -35,6 +35,24 @@ X-Csrf-Token: fGD9U5PO0OPT4D7b6lKJecn8ON-mi7oVrPD3Xx1PS-TTfkvAH1HLYPf-6IL-1gjjj3
 }
 
 ###
+POST /api/v1/identities/create
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+X-Csrf-Token: DT70FjVYZ8ZiLgxQc3rrycM_1rVRv0H0FicZPzpXAXrD-A0pbgjBJFRtBfBPHzoxQFffrKdc-9Rn3iLZJxN4XQhhMB_ynjxN
+
+{
+    "authority": "USER",
+    "email": "zagor@gmail.com",
+    "password": "zagor",
+    "phone": "+79234527832",
+    "status": true,
+    "firstname": "Загорулько",
+    "lastname": "Борис",
+    "patronymic": "Юрьевич"
+}
+
+###
 GET /api/v1/identities/by-id?identityId=8d3dd834-eb48-4625-b9a2-e596bb8892d5
 Host: localhost:9000
 Accept: application/json
@@ -67,15 +85,30 @@ POST /api/v1/wallets/create
 Host: localhost:9000
 Accept: application/json
 Content-Type: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
+X-Csrf-Token: kyEOjQ_fZjdhWgEWFD736v5V4ntTrFzipFlQaynJ02H1vXMv8kU8tG3oBwFMO2QldxPD2cg2z0Myz2_PlT9nCk_9sgeT30Ec
 
 {
-    "identityId": "99337067-a69e-4ca0-ae8a-8ce9f53f394a"
+    "identityId": "8d3dd834-eb48-4625-b9a2-e596bb8892d5"
 }
 
 ###
-GET /api/v1/wallets/by-id?walletId=a8e2c256-a20c-419d-9cd5-5ff6ed5be7a8
+POST /api/v1/wallets/create
 Host: localhost:9000
 Accept: application/json
+Content-Type: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
+X-Csrf-Token: Cy2QAbpy_9Swu7GxyRqPsHD_pt8sZgTanKxBu7yZ2_9I_cZQakmiONhFnuKd2tSCqje7g0aci-dNBTf3rcp22tqtupkun_Rj
+
+{
+    "identityId": "9fab0424-918a-4cb1-8d5f-be134d6fc82c"
+}
+
+###
+GET /api/v1/wallets/by-id?walletId=1c417413-fe9e-42bd-ab49-ba294328bc8b
+Host: localhost:9000
+Accept: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
 
 ###
 DELETE /api/v1/wallets/delete?walletId=a8e2c256-a20c-419d-9cd5-5ff6ed5be7a8
@@ -93,9 +126,23 @@ POST /api/v1/accounts/create
 Host: localhost:9000
 Accept: application/json
 Content-Type: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
+X-Csrf-Token: ojqBQblC22Q9yuLc4d97XfG_P5KRn-u-jg-GV30RHPpIzlJwkQmydI1yuVIQ8tfkhfJPOcDZEqrzpoqT6zyyNU8jJM9_qjBJ
 
 {
-    "walletId": "a8e2c256-a20c-419d-9cd5-5ff6ed5be7a8"
+    "walletId": "1c417413-fe9e-42bd-ab49-ba294328bc8b"
+}
+
+###
+POST /api/v1/accounts/create
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
+X-Csrf-Token: ojqBQblC22Q9yuLc4d97XfG_P5KRn-u-jg-GV30RHPpIzlJwkQmydI1yuVIQ8tfkhfJPOcDZEqrzpoqT6zyyNU8jJM9_qjBJ
+
+{
+    "walletId": "69e67f79-5222-4cbe-afdb-96c6d69591e6"
 }
 
 ###
@@ -109,9 +156,10 @@ Content-Type: application/json
 }
 
 ###
-GET /api/v1/accounts/by-id?accountId=da460f91-3b85-4d33-9750-82d0400db470
+GET /api/v1/accounts/by-id?accountId=dc54af61-cb60-4d6d-bf16-0ea12e44e8aa
 Host: localhost:9000
 Accept: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
 
 
 
@@ -124,11 +172,27 @@ POST /api/v1/cards/create
 Host: localhost:9000
 Accept: application/json
 Content-Type: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
+X-Csrf-Token: ojqBQblC22Q9yuLc4d97XfG_P5KRn-u-jg-GV30RHPpIzlJwkQmydI1yuVIQ8tfkhfJPOcDZEqrzpoqT6zyyNU8jJM9_qjBJ
 
 {
     "validUntil": "2030-04-15",
     "pin": "7845",
-    "accountId": "da460f91-3b85-4d33-9750-82d0400db470"
+    "accountId": "dc54af61-cb60-4d6d-bf16-0ea12e44e8aa"
+}
+
+###
+POST /api/v1/cards/create
+Host: localhost:9000
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
+X-Csrf-Token: ojqBQblC22Q9yuLc4d97XfG_P5KRn-u-jg-GV30RHPpIzlJwkQmydI1yuVIQ8tfkhfJPOcDZEqrzpoqT6zyyNU8jJM9_qjBJ
+
+{
+    "validUntil": "2030-05-20",
+    "pin": "1235",
+    "accountId": "fd9072ef-6e05-49ea-ad5e-f85f4ceeff15"
 }
 
 ###
@@ -144,9 +208,10 @@ Content-Type: application/json
 }
 
 ###
-GET /api/v1/cards/by-id?cardId=3206d4ef-47fb-44d8-a6b6-d6414a52c0c4
+GET /api/v1/cards/by-id?cardId=3fddc2dd-0b48-46dc-b68f-2e4f0ea5816d
 Host: localhost:9000
 Accept: application/json
+Authorization: Basic burgasvv@gmail.com burgasvv
 
 
 

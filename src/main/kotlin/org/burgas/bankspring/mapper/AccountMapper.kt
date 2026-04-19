@@ -1,10 +1,7 @@
 package org.burgas.bankspring.mapper
 
 import org.burgas.bankspring.dao.account.Account
-import org.burgas.bankspring.dto.account.AccountFullResponse
-import org.burgas.bankspring.dto.account.AccountRequest
-import org.burgas.bankspring.dto.account.AccountResponseWithoutWallet
-import org.burgas.bankspring.dto.account.AccountShortResponse
+import org.burgas.bankspring.dto.account.*
 import org.burgas.bankspring.mapper.contract.FullMapper
 import org.burgas.bankspring.repository.AccountRepository
 import org.springframework.beans.factory.ObjectFactory
@@ -114,6 +111,19 @@ class AccountMapper : FullMapper<AccountRequest, Account, AccountShortResponse, 
             cpp = entity.cpp,
             card = Optional.ofNullable(entity.card)
                 .map { this.getCardMapper().toCardResponseWithoutAccount(it) }
+                .orElse(null),
+            createdAt = entity.createdAt.format(DateTimeFormatter.ofPattern("dd MMMM yyyy, hh:mm"))
+        )
+    }
+
+    fun toAccountResponseWithWallet(entity: Account): AccountResponseWithWallet {
+        return AccountResponseWithWallet(
+            id = entity.id,
+            number = entity.number,
+            inn = entity.inn,
+            cpp = entity.cpp,
+            wallet = Optional.ofNullable(entity.wallet)
+                .map { this.getWalletMapper().toShortResponse(it) }
                 .orElse(null),
             createdAt = entity.createdAt.format(DateTimeFormatter.ofPattern("dd MMMM yyyy, hh:mm"))
         )

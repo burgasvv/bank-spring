@@ -6,7 +6,7 @@ import java.util.UUID
 
 data class OperationRequest(
     override val id: UUID?,
-    val type: OperationType?,
-    val amount: Double?,
-    val cardId: UUID?
+    val type: OperationType,
+    val amount: Double,
+    val cardId: UUID
 ) : Request

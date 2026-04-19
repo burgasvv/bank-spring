@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.web.servlet.function.ServerResponse
 import org.springframework.web.servlet.function.body
+import org.springframework.web.servlet.function.paramOrNull
 import org.springframework.web.servlet.function.router
 import java.util.UUID
 
@@ -21,7 +22,7 @@ class TransferRouter(override val service: TransferService) : Router<TransferSer
         "/api/v1/transfers".nest {
 
             GET("/by-id") {
-                val transferId = UUID.fromString(it.param("transferId").orElseThrow())
+                val transferId = UUID.fromString(it.paramOrNull("transferId"))
                 ServerResponse
                     .status(HttpStatus.OK)
                     .contentType(MediaType.APPLICATION_JSON)
@@ -34,7 +35,7 @@ class TransferRouter(override val service: TransferService) : Router<TransferSer
                 ServerResponse.status(HttpStatus.OK).build()
             }
 
-            onError<Throwable> { throwable, _ ->
+            onError<Exception> { throwable, _ ->
                 ServerResponse.status(HttpStatus.BAD_REQUEST)
                     .body(
                         ExceptionResponse(

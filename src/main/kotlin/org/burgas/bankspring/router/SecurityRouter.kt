@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.web.csrf.CsrfToken
 import org.springframework.web.servlet.function.ServerResponse
+import org.springframework.web.servlet.function.attributeOrNull
 import org.springframework.web.servlet.function.router
 
 @Configuration
@@ -16,7 +17,7 @@ class SecurityRouter {
         "/api/v1/security".nest {
 
             GET("/csrf-token") {
-                val csrfToken = it.attribute("_csrf").orElseThrow() as CsrfToken
+                val csrfToken = it.attributeOrNull("_csrf") as CsrfToken
                 ServerResponse
                     .status(HttpStatus.OK)
                     .contentType(MediaType.APPLICATION_JSON)

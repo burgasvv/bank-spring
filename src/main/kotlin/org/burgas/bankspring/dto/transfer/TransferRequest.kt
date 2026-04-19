@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class TransferRequest(
     override val id: UUID?,
-    val senderId: UUID?,
-    val receiverId: UUID?,
-    val amount: Double?
+    val senderId: UUID,
+    val receiverId: UUID,
+    val amount: Double
 ) : Request

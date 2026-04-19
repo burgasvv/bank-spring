@@ -1,5 +1,6 @@
 package org.burgas.bankspring.router
 
+import org.burgas.bankspring.dao.identity.IdentityDetails
 import org.burgas.bankspring.dto.exception.ExceptionResponse
 import org.burgas.bankspring.dto.wallet.WalletRequest
 import org.burgas.bankspring.router.contract.Router
@@ -8,10 +9,13 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.security.core.Authentication
 import org.springframework.web.servlet.function.ServerResponse
 import org.springframework.web.servlet.function.body
+import org.springframework.web.servlet.function.paramOrNull
+import org.springframework.web.servlet.function.principalOrNull
 import org.springframework.web.servlet.function.router
-import java.util.UUID
+import java.util.*
 
 @Configuration
 class WalletRouter(override val service: WalletService) : Router<WalletService> {
@@ -20,8 +24,32 @@ class WalletRouter(override val service: WalletService) : Router<WalletService> 
     fun walletRoutes() = router {
         "/api/v1/wallets".nest {
 
+            filter { request, function ->
+                if (request.path().equals("/api/v1/wallets/by-id", false)) {
+                    val authentication = request.principalOrNull() as Authentication
+
+                    if (authentication.isAuthenticated) {
+                        val identityDetails = authentication.principal as IdentityDetails
+                        val walletId = UUID.fromString(request.paramOrNull("walletId"))
+                        val wallet = service.findEntity(walletId)
+
+                        if (identityDetails.identity.id == wallet.identity?.id) {
+                            function(request)
+                        } else {
+                            throw IllegalArgumentException("Identity not authorized")
+                        }
+
+                    } else {
+                        throw IllegalArgumentException("Identity not authenticated")
+                    }
+
+                } else {
+                    function(request)
+                }
+            }
+
             GET("/by-id") {
-                val walletId = UUID.fromString(it.param("walletId").orElseThrow())
+                val walletId = UUID.fromString(it.paramOrNull("walletId"))
                 ServerResponse
                     .status(HttpStatus.OK)
                     .contentType(MediaType.APPLICATION_JSON)
@@ -41,12 +69,12 @@ class WalletRouter(override val service: WalletService) : Router<WalletService> 
             }
 
             DELETE("/delete") {
-                val walletId = UUID.fromString(it.param("walletId").orElseThrow())
+                val walletId = UUID.fromString(it.paramOrNull("walletId"))
                 service.delete(walletId)
                 ServerResponse.noContent().build()
             }
 
-            onError<Throwable> { throwable, _ ->
+            onError<Exception> { throwable, _ ->
                 ServerResponse.status(HttpStatus.BAD_REQUEST)
                     .body(
                         ExceptionResponse(

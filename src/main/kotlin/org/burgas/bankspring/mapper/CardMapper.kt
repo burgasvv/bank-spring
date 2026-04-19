@@ -119,7 +119,7 @@ class CardMapper : FullMapper<CardRequest, Card, CardShortResponse, CardFullResp
             validUntil = entity.validUntil.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
             balance = entity.balance,
             account = Optional.ofNullable(entity.account)
-                .map { this.getAccountMapper().toShortResponse(it) }
+                .map { this.getAccountMapper().toAccountResponseWithWallet(it) }
                 .orElse(null),
             operations = entity.operations.map { this.getOperationMapper().toShortResponse(it) },
             transfersBySender = entity.transfersBySender.map { this.getTransferMapper().toResponse(it) },
