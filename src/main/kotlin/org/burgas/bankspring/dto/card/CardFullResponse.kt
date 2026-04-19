@@ -2,11 +2,9 @@ package org.burgas.bankspring.dto.card
 
 import org.burgas.bankspring.dto.Response
 import org.burgas.bankspring.dto.account.AccountResponseWithWallet
-import org.burgas.bankspring.dto.account.AccountResponseWithoutWalletAndCard
-import org.burgas.bankspring.dto.account.AccountShortResponse
 import org.burgas.bankspring.dto.operation.OperationShortResponse
 import org.burgas.bankspring.dto.transfer.TransferResponse
-import java.util.UUID
+import java.util.*
 
 data class CardFullResponse(
     override val id: UUID?,
