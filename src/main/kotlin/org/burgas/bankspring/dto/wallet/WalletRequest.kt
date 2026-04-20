@@ -4,6 +4,6 @@ import org.burgas.bankspring.dto.Request
 import java.util.UUID
 
 data class WalletRequest(
-    override val id: UUID?,
-    val identityId: UUID?
+    override val id: UUID? = null,
+    val identityId: UUID? = null
 ) : Request

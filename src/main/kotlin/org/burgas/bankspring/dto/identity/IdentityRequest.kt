@@ -5,13 +5,13 @@ import org.burgas.bankspring.dto.Request
 import java.util.UUID
 
 data class IdentityRequest(
-    override val id: UUID?,
-    val authority: Authority?,
-    val email: String?,
-    val password: String?,
-    val phone: String?,
-    val status: Boolean?,
-    val firstname: String?,
-    val lastname: String?,
-    val patronymic: String?
+    override val id: UUID? = null,
+    val authority: Authority? = null,
+    val email: String? = null,
+    val password: String? = null,
+    val phone: String? = null,
+    val status: Boolean? = null,
+    val firstname: String? = null,
+    val lastname: String? = null,
+    val patronymic: String? = null
 ) : Request
