@@ -20,4 +20,6 @@ interface CardRepository : JpaRepository<Card, UUID> {
         value = "select c.* from card c where c.id = :id for update"
     )
     fun findCardByIdWithPessimisticLock(id: UUID): Optional<Card>
+
+    fun findCardByPin(pin: String): Optional<Card>
 }

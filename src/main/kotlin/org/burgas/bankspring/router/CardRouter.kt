@@ -36,7 +36,7 @@ class CardRouter(override val service: CardService) : Router<CardService> {
                         if (card.account?.wallet?.identity?.id == identityDetails.identity.id) {
                             function(request)
                         } else {
-                            throw IllegalArgumentException("[Identity not authorized")
+                            throw IllegalArgumentException("Identity not authorized")
                         }
 
                     } else {
