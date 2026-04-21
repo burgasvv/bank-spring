@@ -116,6 +116,7 @@ class TransferService : org.burgas.bankspring.service.contract.Service,
         rollbackFor = [Exception::class, Throwable::class, RuntimeException::class]
     )
     override fun create(request: TransferRequest) {
+        if (request.senderId == request.receiverId) throw IllegalArgumentException("Sender and receiver matched")
         val transfer = this.transferMapper.transferRepository.save(this.transferMapper.toEntity(request))
         this.handleCache(transfer)
     }
